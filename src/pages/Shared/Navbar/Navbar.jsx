@@ -29,7 +29,12 @@ const Navbar = () => {
         <Link to="/">প্রথম পাতা</Link>
       </li>
       <li>
+<<<<<<< HEAD
         <Link to="/menu">Our Menu</Link>
+=======
+        <a>Parent</a>
+       
+>>>>>>> b438837d6925f2de2ab3795dd9f8517b7a909532
       </li>
       <li>
         <Link to="/order/salads">Order Food</Link>
@@ -68,7 +73,11 @@ const Navbar = () => {
   );
   return (
     <>
+<<<<<<< HEAD
       <div className="navbar fixed z-10 bg-opacity-40 text-white bg-slate-600 max-w-screen-xl">
+=======
+      <div className="navbar fixed z-10 max-w-screen-xl bg-opacity-30 bg-black text-white">
+>>>>>>> b438837d6925f2de2ab3795dd9f8517b7a909532
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
