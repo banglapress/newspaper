@@ -1,3 +1,16 @@
+@import url('https://cdn.rawgit.com/sh4hids/bangla-web-fonts/ab-shapla/stylesheet.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.bengali-font {
+    font-family: 'Noto Serif Bengali', serif;
+  }
+.charukola{
+  font-family: 'CharukolaUltraLight', sans-serif;
+}
+.abshapla {
+font-family: 'ABShaplaBeta';
+}

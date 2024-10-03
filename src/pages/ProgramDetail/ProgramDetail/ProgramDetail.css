@@ -1,0 +1,52 @@
+.about-us {
+  color: #333;
+  padding: 20px;
+  max-width: full;
+  margin: 0 auto;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.program-detail-header {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.program-detail-header h1 {
+  color: #213359;
+  margin: 0;
+}
+
+.program-detail-header p {
+  color: #777;
+  margin-top: 5px;
+}
+
+.about-us-content {
+  padding: 20px;
+}
+
+.about-us-section {
+  margin-bottom: 30px;
+}
+
+.about-us-section h2 {
+  color: #213359;
+  margin-bottom: 10px;
+}
+
+.about-us-section p {
+  line-height: 1.6;
+  color: #555;
+}
+
+.about-us-section a {
+  color: #4A90E2;
+  text-decoration: none;
+}
+
+.about-us-section a:hover {
+  text-decoration: underline;
+}
