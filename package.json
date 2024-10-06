@@ -24,23 +24,17 @@
     "match-sorter": "^6.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.53.0",
     "react-icons": "^5.3.0",
     "react-parallax": "^3.5.1",
     "react-quill": "^2.0.0",
     "react-responsive-carousel": "^3.2.23",
-    "react-router-dom": "^6.16.0",
     "react-simple-captcha": "^9.3.1",
     "react-tabs": "^6.0.2",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.13.3",
-=======
-    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.26.1",
-    "sort-by": "^1.2.0",
->>>>>>> b438837d6925f2de2ab3795dd9f8517b7a909532
     "swiper": "^11.1.12"
   },
   "devDependencies": {

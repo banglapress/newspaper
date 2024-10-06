@@ -7,6 +7,7 @@ import {
   FaMoneyBill,
   FaShoppingBag,
   FaShoppingCart,
+  FaUser,
   FaUsers,
   FaUtensils,
 } from "react-icons/fa";
@@ -33,6 +34,7 @@ const Dashboard = () => {
                   Admin Home
                 </NavLink>
               </li>
+
               <li>
                 <NavLink to="/dashboard/addItems">
                   <FaUtensils />
@@ -43,6 +45,12 @@ const Dashboard = () => {
                 <NavLink to="/dashboard/manageItems">
                   <FaList />
                   Manage Items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manageUsers">
+                  <FaList />
+                  Manage Users
                 </NavLink>
               </li>
               <li>
@@ -70,6 +78,12 @@ const Dashboard = () => {
                 <NavLink to="/dashboard/userHome">
                   <FaHome />
                   User Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/userProfile">
+                  <FaUser />
+                  User Profile
                 </NavLink>
               </li>
               <li>

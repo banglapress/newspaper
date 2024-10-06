@@ -21,6 +21,8 @@ const AddJobs = () => {
   const [jobResponsibility, setJobResponsibility] = useState("");
   const [jobSkillRequirement, setJobSkillRequirement] = useState("");
   const [jobSpecialRequirement, setJobSpecialRequirement] = useState("");
+  const [jobApplicationProcess, setJobApplicationProcess] = useState("");
+  const [jobOtherBenefits, setJobOtherBenefits] = useState("");
 
   const handleJobDescriptionChange = (value) => {
     setJobDescription(value);
@@ -38,6 +40,13 @@ const AddJobs = () => {
     setJobSpecialRequirement(value);
   };
 
+  const handleJobApplicationProcessChange = (value) => {
+    setJobApplicationProcess(value);
+  };
+  const handleJobOtherBenefitsChange = (value) => {
+    setJobOtherBenefits(value);
+  };
+
   const onSubmit = async (data) => {
     const image_file = { image: data.image[0] };
     const res = await axiosPublic.post(image_hosting_api, image_file, {
@@ -45,13 +54,14 @@ const AddJobs = () => {
     });
     if (res.data.success) {
       const jobItem = {
+        jobCompanyName: data.jobCompanyName,
         jobTitle: data.jobTitle,
         jobCategory: data.jobCategory,
         jobPostPlacement: data.jobPostPlacement,
-        // jobDescription: data.jobDescription,
-        // jobResponsibility: data.jobResponsibility,
         jobEmpStatus: data.jobEmpStatus,
         jobSalary: data.jobSalary,
+        jobLastDate: data.jobLastDate,
+        jobVacancyNumber: data.jobVacancyNumber,
         jobWorkPlace: data.jobWorkPlace,
         jobLocation: data.jobLocation,
         jobGenderPreference: data.jobGenderPreference,
@@ -59,12 +69,12 @@ const AddJobs = () => {
         jobLevel: data.jobLevel,
         jobAgeLimit: data.jobAgeLimit,
         jobExperience: data.jobExperience,
-        // jobSkillRequirement: data.jobSkillRequirement,
-        // jobSpecialRequirement: data.jobSpecialRequirement,
         jobDescription,
         jobResponsibility,
         jobSkillRequirement,
         jobSpecialRequirement,
+        jobOtherBenefits,
+        jobApplicationProcess,
         jobSourceLink: data.jobSourceLink,
         image: res.data.data.display_url,
       };
@@ -86,15 +96,17 @@ const AddJobs = () => {
   return (
     <div className="bg-white p-8">
       <SectionTitle heading="Add A New Job" subHeading="What's New" />
+      <img src={user?.photoURL} alt="" />
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex gap-6">
             {/* Company Name */}
             <label className="form-control w-full my-6">
               <div className="label">
-                <span className="label-text">Company Name</span>
+                <span className="label-text">Company Name*</span>
               </div>
               <input
+                {...register("jobCompanyName", { required: true })}
                 type="text"
                 placeholder={user?.displayName}
                 value={user?.displayName}
@@ -194,9 +206,9 @@ const AddJobs = () => {
               </select>
             </label>
           </div>
-
+          {/* --------------------------------------------------------------- */}
           {/* Job Title */}
-          <label className="form-control w-full my-6">
+          <label className="form-control w-2/3 my-6">
             <div className="label">
               <span className="label-text">Job Title*</span>
             </div>
@@ -208,6 +220,56 @@ const AddJobs = () => {
             />
           </label>
 
+          {/* --------------------------------------------------------------- */}
+          <div className="flex gap-6">
+            {/* Application Last Date */}
+
+            <label className="form-control w-1/3 my-6">
+              <div className="label">
+                <span className="label-text">Last Date of Application*</span>
+              </div>
+              <input
+                {...register("jobLastDate", { required: true })}
+                type="date" // Changed to 'date' to show the calendar
+                placeholder="Last Date"
+                className="input input-bordered w-full"
+              />
+            </label>
+
+            {/* Job Level */}
+            <label className="form-control w-1/3 my-6">
+              <div className="label">
+                <span className="label-text">Job Level</span>
+              </div>
+              <select
+                defaultValue="default"
+                {...register("jobLevel")}
+                className="select select-bordered w-full"
+              >
+                <option disabled value="default">
+                  Select an Option
+                </option>
+                <option value="jobEntryLevel">Entry Level</option>
+                <option value="jobMidLevel">Mid Level</option>
+                <option value="jobSeniorLevel">Senior Level</option>
+                <option value="jobNALevel">Not Applicable</option>
+              </select>
+            </label>
+
+            <label className="form-control w-1/3 my-6">
+              <div className="label">
+                <span className="label-text">Vacancy*</span>
+              </div>
+              <input
+                {...register("jobVacancyNumber", { required: true })}
+                type="number"
+                placeholder="Please write a number."
+                defaultValue="0"
+                className="input input-bordered w-full"
+              />
+            </label>
+          </div>
+          {/* ---------------------------------------------------------------------- */}
           {/* Job Description */}
           <label className="form-control my-6">
             <div className="label">
@@ -229,7 +291,9 @@ const AddJobs = () => {
           {/* Job Responsibility */}
           <label className="form-control my-16">
             <div className="label">
-              <span className="label-text font-bold">Job Responsibility</span>
+              <span className="label-text font-bold">
+                Job Duties and Responsibility
+              </span>
             </div>
             {/* <textarea
               {...register("jobResponsibility")}
@@ -253,7 +317,7 @@ const AddJobs = () => {
               </div>
               <select
                 defaultValue="default"
-                {...register("jobEmpStatus", { required: true })}
+                {...register("jobEmpStatus")}
                 className="select select-bordered w-full"
               >
                 <option disabled value="default">
@@ -269,10 +333,10 @@ const AddJobs = () => {
             {/* Salary Range */}
             <label className="form-control w-full my-6">
               <div className="label">
-                <span className="label-text">Salary Range*</span>
+                <span className="label-text">Salary Range</span>
               </div>
               <input
-                {...register("jobSalary", { required: true })}
+                {...register("jobSalary")}
                 type="text"
                 placeholder="e.g. BDT 20,000-30,000 or Negotiable"
                 className="input input-bordered w-full"
@@ -281,26 +345,6 @@ const AddJobs = () => {
           </div>
 
           <div className="flex gap-6">
-            {/* Workplace */}
-
-            <label className="form-control w-full my-6">
-              <div className="label">
-                <span className="label-text">Workplace*</span>
-              </div>
-              <select
-                defaultValue="default"
-                {...register("jobWorkPlace", { required: true })}
-                className="select select-bordered w-full"
-              >
-                <option disabled value="default">
-                  Select an Option
-                </option>
-                <option value="online">Work From Home</option>
-                <option value="offline">Work at Office</option>
-                <option value="mixed">Both Office and Home</option>
-              </select>
-            </label>
-
             {/* Job Location */}
             <label className="form-control w-full my-6">
               <div className="label">
@@ -308,13 +352,14 @@ const AddJobs = () => {
               </div>
               <select
                 defaultValue="default"
-                {...register("jobLocation", { required: true })}
+                {...register("jobLocation")}
                 className="select select-bordered w-full"
               >
                 <option disabled value="default">
                   Select a Region
                 </option>
                 <option value="anywhere">Anywhere in Bangladesh</option>
+                <option value="workFromHome">Work From Home</option>
                 <option value="barisal">Barisal</option>
                 <option value="bogura">Bogura</option>
                 <option value="chattagram">Chattagram</option>
@@ -337,6 +382,19 @@ const AddJobs = () => {
                 <option value="tangail">Tangail</option>
               </select>
             </label>
+            {/* Education */}
+            <label className="form-control w-full my-6">
+              <div className="label">
+                <span className="label-text">Education</span>
+              </div>
+
+              <input
+                {...register("jobEducation")}
+                type="text"
+                placeholder="e.g. Business Graduate or MA"
+                className="input input-bordered w-full"
+              />
+            </label>
           </div>
 
           <div className="flex gap-6">
@@ -347,7 +405,7 @@ const AddJobs = () => {
               </div>
               <select
                 defaultValue="default"
-                {...register("jobGenderPreference", { required: true })}
+                {...register("jobGenderPreference")}
                 className="select select-bordered w-full"
               >
                 <option disabled value="default">
@@ -364,108 +422,52 @@ const AddJobs = () => {
                 <option value="onlyMale">Only Male Can Apply</option>
               </select>
             </label>
-
-            {/* Education */}
-            <label className="form-control w-full my-6">
-              <div className="label">
-                <span className="label-text">Education</span>
-              </div>
-
-              <input
-                {...register("jobEducation", { required: true })}
-                type="text"
-                placeholder="e.g. Business Graduate or MA"
-                className="input input-bordered w-full"
-              />
-            </label>
           </div>
 
           <div className="flex gap-6">
             {/* Job Level */}
-
-            <label className="form-control w-full my-6">
-              <div className="label">
-                <span className="label-text">Job Level</span>
-              </div>
-              <select
-                defaultValue="default"
-                {...register("jobLevel", { required: true })}
-                className="select select-bordered w-full"
-              >
-                <option disabled value="default">
-                  Select an Option
-                </option>
-                <option value="jobEntryLevel">Entry Level</option>
-                <option value="jobMidLevel">Mid Level</option>
-                <option value="jobSeniorLevel">Senior Level</option>
-                <option value="jobNALevel">Not Applicable</option>
-              </select>
-            </label>
 
             {/* Age Preference */}
             <label className="form-control w-full my-6">
               <div className="label">
                 <span className="label-text">Age Preference</span>
               </div>
-              <select
-                defaultValue="default"
-                {...register("jobAgeLimit", { required: true })}
-                className="select select-bordered w-full"
-              >
-                <option disabled value="default">
-                  Select an Option
-                </option>
-                <option value="noAgeLimit">No Age Limit</option>
-                <option value="below20">20 Years or Below</option>
-                <option value="below25">25 Years or Below</option>
-                <option value="below30">30 Years or Below</option>
-                <option value="below35">35 Years or Below</option>
-                <option value="below40">40 Years or Below</option>
-                <option value="below45">45 Years or Below</option>
-                <option value="below50">50 Years or Below</option>
-                <option value="below55">55 Years or Below</option>
-                <option value="below60">60 Years or Below</option>
-              </select>
+
+              <input
+                {...register("jobAgeLimit")}
+                type="text"
+                placeholder="e.g. Not more than 35 years old"
+                className="input input-bordered w-full"
+              />
             </label>
 
             {/* Experience */}
+            {/* Age Preference */}
             <label className="form-control w-full my-6">
               <div className="label">
                 <span className="label-text">Experience</span>
               </div>
-              <select
-                defaultValue="default"
-                {...register("jobExperience", { required: true })}
-                className="select select-bordered w-full"
-              >
-                <option disabled value="default">
-                  Select an Option
-                </option>
-                <option value="noExperience">No Experience Required</option>
-                <option value="minOneEx">1-2 Year Experience Required</option>
-                <option value="minTwoEx">2-5 Year Experience Required</option>
-                <option value="minFiveEx">5-10 Year Experience Required</option>
-                <option value="min10Ex">10-15 Year Experience Required</option>
-                <option value="min15Ex">15-20 Year Experience Required</option>
-                <option value="min20Ex">20-25 Year Experience Required</option>
-                <option value="min25Ex">25-30 Year Experience Required</option>
-              </select>
+
+              <input
+                {...register("jobExperience")}
+                type="text"
+                placeholder="e.g. 1-2 Year Experience Required"
+                className="input input-bordered w-full"
+              />
             </label>
           </div>
 
           {/* Skill Requirement */}
           <label className="form-control">
             <div className="label">
-              <span className="label-text font-bold">Skill Requirement</span>
+              <span className="label-text font-bold">
+                Specific Skill & Experience Requirement (যোগ্যতা ও অভিজ্ঞতা)*
+              </span>
             </div>
-            {/* <textarea
-              {...register("jobSkillRequirement")}
-              className="textarea textarea-bordered h-24"
-              placeholder="Write Skill Requirement Detail Here"
-            ></textarea> */}
             <ReactQuill
               className="h-48"
               value={jobSkillRequirement}
+              required
               onChange={handleJobSkillRequirementChange}
               placeholder="Write Skill Requirement Detail Here"
             />
@@ -474,18 +476,45 @@ const AddJobs = () => {
           {/* Special Requirement */}
           <label className="form-control my-16">
             <div className="label">
-              <span className="label-text font-bold">Special Requirement</span>
+              <span className="label-text font-bold">
+                Special Requirement (অন্যান্য শর্তাবলি)
+              </span>
             </div>
-            {/* <textarea
-              {...register("jobSpecialRequirement")}
-              className="textarea textarea-bordered h-24"
-              placeholder="Write Skill Requirement Detail Here"
-            ></textarea> */}
             <ReactQuill
               className="h-48"
               value={jobSpecialRequirement}
               onChange={handleJobSpecialRequirementChange}
               placeholder="Write Special Requirement Detail Here"
+            />
+          </label>
+
+          {/* Compensation & Other Benefits */}
+          <label className="form-control my-16">
+            <div className="label">
+              <span className="label-text font-bold">
+                Compensation & Other Benefits
+              </span>
+            </div>
+            <ReactQuill
+              className="h-48"
+              value={jobOtherBenefits}
+              onChange={handleJobOtherBenefitsChange}
+              placeholder="Write Special Requirement Detail Here"
+            />
+          </label>
+
+          {/* Special Requirement */}
+          <label className="form-control my-16">
+            <div className="label">
+              <span className="label-text font-bold">
+                Application Process (আবেদন প্রক্রিয়া)
+              </span>
+            </div>
+            <ReactQuill
+              className="h-48"
+              value={jobApplicationProcess}
+              onChange={handleJobApplicationProcessChange}
+              placeholder="Write Application Process Detail Here"
             />
           </label>
 

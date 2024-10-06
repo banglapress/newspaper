@@ -21,6 +21,11 @@ import Registration from "../pages/Registration/Registration";
 import ProgramDetail from "../pages/ProgramDetail/ProgramDetail/ProgramDetail";
 import JobDetailPage from "../pages/CategoryPage/JobDetailPage";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
+import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
+import UpdateUserProfile from "../pages/Dashboard/UpdateUserProfile/UpdateUserProfile";
+import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
+import UpdateUser from "../pages/Dashboard/UpdateUser/UpdateUser";
+import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +48,11 @@ export const router = createBrowserRouter([
       {
         path: "/program-detail",
         element: <ProgramDetail />,
+      },
+
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "jobs/category/:category",
@@ -93,6 +103,15 @@ export const router = createBrowserRouter([
         path: "payment",
         element: <Payment />,
       },
+      {
+        path: "userProfile",
+        element: <UserProfile />,
+      },
+      {
+        path: "updateUserProfile",
+        element: <UpdateUserProfile />,
+      },
+
       // admins only routes
       {
         path: "addItems",
@@ -112,6 +131,15 @@ export const router = createBrowserRouter([
       },
 
       {
+        path: "manageUsers",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+
+      {
         path: "updateItem/:id",
         element: (
           <AdminRoute>
@@ -120,6 +148,17 @@ export const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`https://jeebisa.vercel.app/menu/${params.id}`),
+      },
+
+      {
+        path: "updateUser/:id",
+        element: (
+          <AdminRoute>
+            <UpdateUser />
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/users/${params.id}`),
       },
 
       {

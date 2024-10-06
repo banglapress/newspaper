@@ -26,9 +26,11 @@ const SignUp = () => {
       console.log(loggedUser);
       updateUserProfile(data.name, data.photoURL)
         .then(() => {
+          // Include photoURL in userInfo
           const userInfo = {
             name: data.name,
             email: data.email,
+            photoURL: data.photoURL, // Add photoURL here
           };
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {

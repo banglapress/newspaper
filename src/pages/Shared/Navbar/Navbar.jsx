@@ -1,13 +1,25 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Disclosure, DisclosureButton } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
-import { HiShoppingCart } from "react-icons/hi";
-import useCart from "../../../hooks/useCart";
 import Swal from "sweetalert2";
+// import logoimage from "../../../assets/logo.png";
 
-const Navbar = () => {
+const initialNavigation = [
+  { name: "রেজিস্ট্রেশন", href: "registration", current: true },
+  { name: "আমাদের সম্পর্কে", href: "our-team", current: false },
+  { name: "বিস্তারিত কার্যক্রম", href: "program-detail", current: false },
+  { name: "যোগাযোগ", href: "contact", current: false },
+  { name: "ড্যাশবোর্ড", href: "dashboard/cart", current: false },
+];
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export default function NavBarBar() {
   const { user, logOut } = useContext(AuthContext);
-  const [cart] = useCart();
 
   const handleLogOut = () => {
     logOut()
@@ -23,106 +35,127 @@ const Navbar = () => {
     });
   };
 
-  const navOptions = (
-    <>
-      <li>
-        <Link to="/">প্রথম পাতা</Link>
-      </li>
-      <li>
-<<<<<<< HEAD
-        <Link to="/menu">Our Menu</Link>
-=======
-        <a>Parent</a>
-       
->>>>>>> b438837d6925f2de2ab3795dd9f8517b7a909532
-      </li>
-      <li>
-        <Link to="/order/salads">Order Food</Link>
-      </li>
-      <li>
-        <Link to="/secret">Secret</Link>
-      </li>
-      <li>
-        <Link to="/dashboard/cart">
-          <button className="btn">
-            <HiShoppingCart className="mr-2" />
-            <div className="badge badge-secondary">+{cart.length}</div>
-          </button>
-        </Link>
-      </li>
+  const location = useLocation();
+  const [navigation, setNavigation] = useState(initialNavigation);
 
-      {user ? (
+  useEffect(() => {
+    const updatedNavigation = navigation.map((item) => ({
+      ...item,
+      current: item.href === location.pathname,
+    }));
+
+    setNavigation(updatedNavigation);
+  }, [location.pathname]);
+
+  return (
+    <Disclosure
+      as="nav"
+      className="fixed bg-gray-800 top-0 left-0 right-0 max-w-screen-xl mx-auto"
+    >
+      {({ open }) => (
         <>
-          <li>
-            <span>{user?.displayName}</span>
-          </li>
-          <li>
-            <button onClick={handleLogOut} className="btn-active btn-ghost">
-              Log Out
-            </button>
-          </li>
-        </>
-      ) : (
-        <>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="relative flex h-16 items-center justify-between">
+              {/* Mobile menu button */}
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <DisclosureButton className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </DisclosureButton>
+              </div>
+
+              {/* Logo and desktop navigation */}
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex flex-shrink-0 items-center">
+                  <Link
+                    to="/"
+                    className="hover:pl-4 transition-all jeebikanavfont font-bold text-yellow-300 text-3xl"
+                  >
+                    jeebika.com
+                    {/* <img height="100px" width="150px" src={logoimage} alt="" /> */}
+                  </Link>
+                </div>
+
+                {/* Desktop menu */}
+                <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-4 abshapla">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className={classNames(
+                          item.current
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "rounded-md px-3 py-2 text-xl"
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* User profile */}
+              <div className="absolute text-orange-300 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {user ? (
+                  <>
+                    <img
+                      src={user?.photoURL}
+                      alt="User Avatar"
+                      className="h-8 w-8 rounded-full mr-2 object-cover"
+                    />
+                    <span className="hidden sm:inline mr-4">
+                      {user?.displayName}
+                    </span>
+
+                    <button
+                      onClick={handleLogOut}
+                      className="btn-active btn-ghost hover:text-white"
+                    >
+                      Log Out
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="login"
+                    className="rounded-full bg-gray-800 px-4 py-2 text-gray-400 hover:text-white"
+                  >
+                    লগইন
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile menu */}
+          <Disclosure.Panel className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={classNames(
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
+                  )}
+                  aria-current={item.current ? "page" : undefined}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </Disclosure.Panel>
         </>
       )}
-    </>
+    </Disclosure>
   );
-  return (
-    <>
-<<<<<<< HEAD
-      <div className="navbar fixed z-10 bg-opacity-40 text-white bg-slate-600 max-w-screen-xl">
-=======
-      <div className="navbar fixed z-10 max-w-screen-xl bg-opacity-30 bg-black text-white">
->>>>>>> b438837d6925f2de2ab3795dd9f8517b7a909532
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-opacity-40 text-white bg-slate-800  rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              {navOptions}
-            </ul>
-          </div>
-          <a className="btn btn-ghost text-xl">
-            <div className="flex flex-shrink-0 items-center justify-center">
-              <Link
-                to="/"
-                className="hover:pl-4 transition-all jeebikanavfont font-bold text-red-500 text-3xl"
-              >
-                jeebika.com
-              </Link>
-            </div>
-          </a>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
-        </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
-        </div>
-      </div>
-    </>
-  );
-};
-
-export default Navbar;
+}

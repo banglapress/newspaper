@@ -68,7 +68,7 @@ const CategoryPage = () => {
   return (
     <div className="mt-20">
       <h1 className="text-3xl text-center font-bold">
-        All Jobs in {categoryName}
+        All Jobs in {categoryName} (Total Jobs: {jobs.length})
       </h1>
       <ul className="grid grid-cols-2 md:grid-cols-3 gap-4 list-disc pl-6 text-lg">
         {jobs.map((job) => (

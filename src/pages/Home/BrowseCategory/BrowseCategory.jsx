@@ -5,7 +5,7 @@ import axios from "axios";
 const BrowseCategory = () => {
   const [jobCounts, setJobCounts] = useState({}); // State to hold job counts from the database
 
-  // Updated categories without jobCount
+  // Categories with their values
   const [categories] = useState([
     {
       id: 1,
@@ -135,7 +135,7 @@ const BrowseCategory = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleCategoryClick = (categoryValue) => {
-    navigate(`/jobs/category/${categoryValue}`); // Updated to use category value
+    navigate(`/jobs/category/${categoryValue}`); // Navigate to the category page
   };
 
   // Fetch job counts from the backend when the component mounts
@@ -143,9 +143,9 @@ const BrowseCategory = () => {
     const fetchJobCounts = async () => {
       try {
         const response = await axios.get(
-          "https://jeebisa.vercel.app/jobs/countByCategory"
+          "http://localhost:5000/jobs/countByCategory"
         );
-        setJobCounts(response.data);
+        setJobCounts(response.data); // Set job counts for each category
       } catch (error) {
         console.error("Error fetching job counts:", error);
       }
@@ -160,11 +160,11 @@ const BrowseCategory = () => {
         {categories.map((category) => (
           <li key={category.id} className="mb-2">
             <button
-              onClick={() => handleCategoryClick(category.value)} // Updated to use category value
-              className="text-cyan-700 hover:underline text-sm md:text-lg" // Adjusted text size
+              onClick={() => handleCategoryClick(category.value)}
+              className="text-cyan-700 hover:underline text-sm md:text-lg"
             >
-              {category.name} ({jobCounts[category.value] || 0}){" "}
-              {/* Display job count from the database */}
+              {category.name} ({jobCounts[category.value] || 0})
+              {/* Display job count */}
             </button>
           </li>
         ))}
