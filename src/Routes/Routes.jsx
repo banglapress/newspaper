@@ -26,6 +26,9 @@ import UpdateUserProfile from "../pages/Dashboard/UpdateUserProfile/UpdateUserPr
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import UpdateUser from "../pages/Dashboard/UpdateUser/UpdateUser";
 import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
+import AddTender from "../pages/Dashboard/AddTender/AddTender";
+import AddEducationalNotice from "../pages/Dashboard/AddEducationalNotice/AddEducationalNotice";
+import SingleTender from "../pages/Home/FeaturedTenders/SingleTender";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/tenders/:tenderId",
+        element: <SingleTender />,
       },
       {
         path: "/secret",
@@ -158,7 +165,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/users/${params.id}`),
+          fetch(`https://jeebisa.vercel.app/users/${params.id}`),
       },
 
       {
@@ -166,6 +173,23 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AddJobs />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "addtender",
+        element: (
+          <AdminRoute>
+            <AddTender />
+          </AdminRoute>
+        ),
+      },
+
+      {
+        path: "addEduNotice",
+        element: (
+          <AdminRoute>
+            <AddEducationalNotice />
           </AdminRoute>
         ),
       },

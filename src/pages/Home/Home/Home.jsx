@@ -4,6 +4,7 @@ import BrowseCategory from "../BrowseCategory/BrowseCategory";
 import FeaturedJobs from "../FeaturedJobs/FeaturedJobs";
 import NewCourse from "../New-Course/NewCourse";
 import NavBarBar from "../../Shared/Navbar/NavBar";
+import FeaturedTenders from "../FeaturedTenders/FeaturedTenders";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <NewCourse />
       <BrowseCategory />
       <FeaturedJobs />
+      <FeaturedTenders />
       <Testimonials />
     </>
   );

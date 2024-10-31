@@ -60,6 +60,18 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
+                <NavLink to="/dashboard/addtender">
+                  <FaBook />
+                  Add A New Tender
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/addEduNotice">
+                  <FaBook />
+                  Add A New Education Notice
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/dashboard/users">
                   <FaUsers />
                   All Users

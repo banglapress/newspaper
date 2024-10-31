@@ -143,7 +143,7 @@ const BrowseCategory = () => {
     const fetchJobCounts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/jobs/countByCategory"
+          "https://jeebisa.vercel.app/jobs/countByCategory"
         );
         setJobCounts(response.data); // Set job counts for each category
       } catch (error) {
@@ -161,7 +161,7 @@ const BrowseCategory = () => {
           <li key={category.id} className="mb-2">
             <button
               onClick={() => handleCategoryClick(category.value)}
-              className="text-cyan-700 hover:underline text-sm md:text-lg"
+              className="text-[#154360] hover:underline text-xs md:text-lg"
             >
               {category.name} ({jobCounts[category.value] || 0})
               {/* Display job count */}
